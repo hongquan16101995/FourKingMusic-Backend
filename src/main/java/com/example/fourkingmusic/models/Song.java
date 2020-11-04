@@ -23,16 +23,4 @@ public class Song {
     @ManyToOne
     @JoinColumn(name = "users")
     private Users user;
-
-    @ManyToMany
-    @JoinTable(name = "playlist_song",
-            joinColumns = {@JoinColumn(name = "song_id")},
-            inverseJoinColumns = {@JoinColumn(name = "playlist_id")})
-    private Set<Playlist> playlists;
-
-    @ManyToMany
-    @JoinTable(name = "singer_song",
-            joinColumns = {@JoinColumn(name = "song_id")},
-            inverseJoinColumns = {@JoinColumn(name = "singer_id")})
-    private Set<Singer> singers;
 }
