@@ -1,6 +1,8 @@
 package com.example.fourkingmusic.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -23,4 +25,9 @@ public class Song {
     @ManyToOne
     @JoinColumn(name = "users")
     private Users user;
+
+    @ManyToMany(mappedBy = "songs")
+    @EqualsAndHashCode.Exclude
+    @JsonIgnoreProperties("songs")
+    private Set<Singer> singers;
 }
