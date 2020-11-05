@@ -7,6 +7,8 @@ import com.example.fourkingmusic.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class SongServiceImpl implements SongService {
 
@@ -14,8 +16,8 @@ public class SongServiceImpl implements SongService {
     private SongRepository songRepository;
 
     @Override
-    public Iterable<Song> findAll() {
-        return songRepository.findAll();
+    public ArrayList<Song> findAll() {
+        return (ArrayList<Song>) songRepository.findAll();
     }
 
     @Override

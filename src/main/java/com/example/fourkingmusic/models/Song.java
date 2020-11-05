@@ -3,6 +3,7 @@ package com.example.fourkingmusic.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -26,8 +27,12 @@ public class Song {
     @JoinColumn(name = "users")
     private Users user;
 
-    @ManyToMany(mappedBy = "songs")
+    @ManyToMany
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JoinTable(name = "singer_song",
+            joinColumns = {@JoinColumn(name = "song_id")},
+            inverseJoinColumns = {@JoinColumn(name = "singer_id")})
     @JsonIgnoreProperties("songs")
     private Set<Singer> singers;
 }

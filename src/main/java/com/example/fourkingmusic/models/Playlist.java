@@ -3,6 +3,7 @@ package com.example.fourkingmusic.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -13,6 +14,7 @@ public class Playlist {
     private Long id;
 
     private String name;
+    private Date dateCreated;
 
     @ManyToOne
     @JoinColumn(name = "user")
