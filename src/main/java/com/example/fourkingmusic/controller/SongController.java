@@ -1,6 +1,7 @@
 package com.example.fourkingmusic.controller;
 
 import com.example.fourkingmusic.models.Song;
+import com.example.fourkingmusic.models.Users;
 import com.example.fourkingmusic.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,7 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 @Controller
+@CrossOrigin("*")
 @RequestMapping("/song")
 public class SongController {
     @Autowired
@@ -16,8 +21,17 @@ public class SongController {
 
     @GetMapping
     public ResponseEntity<Iterable<Song>> getAllSong(){
-        Iterable<Song> songs = songService.findAll();
-        return new ResponseEntity<>(songs, HttpStatus.OK);
+        ArrayList<Song> songs = songService.findAll();
+        ArrayList<Song> songArrayList = new ArrayList<>();
+        int count = 0;
+        for (Song song : songs) {
+            songArrayList.add(song);
+            count++;
+            if (count == 7) {
+                break;
+            }
+        }
+        return new ResponseEntity<>(songArrayList, HttpStatus.OK);
     }
 
     @GetMapping("/user")
@@ -32,6 +46,21 @@ public class SongController {
         return new ResponseEntity<>(songs, HttpStatus.OK);
     }
 
+    @GetMapping("/new")
+    public ResponseEntity<Iterable<Song>> getAllPlaylistNew() {
+        ArrayList<Song> songs = songService.findAll();
+        ArrayList<Song> songArrayList = new ArrayList<>();
+        int count = 0;
+        for (int i = (songs.size()-1); i > 0; i--) {
+            songArrayList.add(songs.get(i));
+            count++;
+            if (count == 10) {
+                break;
+            }
+        }
+        return new ResponseEntity<>(songArrayList, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Song> getSongById(@PathVariable("id") Long id){
         Song song = songService.findOne(id);
@@ -40,6 +69,7 @@ public class SongController {
 
     @PostMapping
     public ResponseEntity<Song> createSong(@RequestBody Song song){
+        song.setDateCreated(new Date());
         songService.saveSong(song);
         return new ResponseEntity<>(song, HttpStatus.OK);
     }

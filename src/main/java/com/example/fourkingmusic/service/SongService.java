@@ -1,9 +1,12 @@
 package com.example.fourkingmusic.service;
 
 import com.example.fourkingmusic.models.Song;
+import com.example.fourkingmusic.models.Users;
+
+import java.util.ArrayList;
 
 public interface SongService {
-    Iterable<Song> findAll();
+    ArrayList<Song> findAll();
 
     Iterable<Song> findByName(String name);
 
