@@ -1,6 +1,6 @@
 package com.example.fourkingmusic.jwt;
 
-import com.example.fourkingmusic.service.Impl.UserDetailsServiceImpl;
+import com.example.fourkingmusic.service.impl.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
