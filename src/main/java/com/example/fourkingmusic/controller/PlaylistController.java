@@ -110,4 +110,5 @@ public class PlaylistController {
         playlistService.savePlaylist(playlist);
         return new ResponseEntity<>(playlist, HttpStatus.OK);
     }
+
 }
