@@ -20,27 +20,21 @@ public class UserDetailsImpl implements UserDetails {
 
     private String email;
 
-    private String avatarUrl;
-    private String gender;
-    private String name;
-    private String hobbies;
-
     @JsonIgnore
     private String password;
 
     private Collection<? extends GrantedAuthority> authorities;
 
+    private Users user;
+
     public UserDetailsImpl(Long id, String username, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities, String avatarUrl, String gender, String name, String hobbies) {
+                           Collection<? extends GrantedAuthority> authorities, Users user) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
-        this.avatarUrl= avatarUrl;
-        this.gender= gender;
-        this.name = name;
-        this.hobbies= hobbies;
+        this.user = user;
     }
 
     public static UserDetailsImpl build(Users users) {
@@ -54,10 +48,7 @@ public class UserDetailsImpl implements UserDetails {
                 users.getEmail(),
                 users.getPassword(),
                 authorities,
-                users.getAvatarUrl(),
-                users.getGender(),
-                users.getName(),
-                users.getHobbies()
+                users
                 );
     }
 
@@ -74,22 +65,9 @@ public class UserDetailsImpl implements UserDetails {
         return email;
     }
 
-    public String getAvatarUrl() {
-        return avatarUrl;
+    public Users getUser() {
+        return user;
     }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getHobbies() {
-        return hobbies;
-    }
-
 
     @Override
     public String getPassword() {
