@@ -21,17 +21,22 @@ public class Users {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id"))
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
     public Users() {
     }
 
-    public Users(String username, String email, String password) {
+    public Users(String username, String email, String password, String avatarUrl,
+                 String gender, String name, String hobbies) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.avatarUrl = avatarUrl;
+        this.hobbies = hobbies;
+        this.name = name;
+        this.gender = gender;
     }
 
     public Users(Long id, String name, String email, String username, String password, String gender, String hobbies, String avatarUrl, Set<Role> roles) {

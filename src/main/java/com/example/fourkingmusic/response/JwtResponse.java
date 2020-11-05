@@ -1,5 +1,7 @@
 package com.example.fourkingmusic.response;
 
+import com.example.fourkingmusic.models.Users;
+
 import java.util.List;
 
 public class JwtResponse {
@@ -8,12 +10,14 @@ public class JwtResponse {
     private String username;
     private String email;
     private List<String> roles;
+    private Users user;
 
-    public JwtResponse(String token, Long id, String username, String email, List<String> roles) {
+    public JwtResponse(String token, String username, String email, List<String> roles, Users user) {
         this.token = token;
         this.username = username;
         this.email = email;
         this.roles = roles;
+        this.user = user;
     }
 
     public String getToken() {
@@ -54,5 +58,13 @@ public class JwtResponse {
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
     }
 }

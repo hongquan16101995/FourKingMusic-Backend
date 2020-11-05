@@ -14,24 +14,27 @@ import java.util.stream.Collectors;
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private final Long id;
 
-    private String username;
+    private final String username;
 
-    private String email;
+    private final String email;
 
     @JsonIgnore
-    private String password;
+    private final String password;
 
-    private Collection<? extends GrantedAuthority> authorities;
+    private final Collection<? extends GrantedAuthority> authorities;
+
+    private final Users user;
 
     public UserDetailsImpl(Long id, String username, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
+                           Collection<? extends GrantedAuthority> authorities, Users user) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+        this.user = user;
     }
 
     public static UserDetailsImpl build(Users users) {
@@ -44,7 +47,8 @@ public class UserDetailsImpl implements UserDetails {
                 users.getUsername(),
                 users.getEmail(),
                 users.getPassword(),
-                authorities);
+                authorities,
+                users);
     }
 
     @Override
@@ -70,24 +74,28 @@ public class UserDetailsImpl implements UserDetails {
         return username;
     }
 
+    public Users getUser() {
+        return user;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     @Override
