@@ -28,10 +28,14 @@ public class Users {
     public Users() {
     }
 
-    public Users(String username, String email, String password) {
+    public Users(String username, String email, String password,String gender, String avatarUrl, String name, String hobbies) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.gender = gender;
+        this.hobbies = hobbies;
+        this.avatarUrl = avatarUrl;
+        this.name = name;
     }
 
     public Users(Long id, String name, String email, String username, String password, String gender, String hobbies, String avatarUrl, Set<Role> roles) {
