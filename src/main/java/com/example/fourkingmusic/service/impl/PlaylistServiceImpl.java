@@ -1,7 +1,6 @@
 package com.example.fourkingmusic.service.impl;
 
 import com.example.fourkingmusic.models.Playlist;
-import com.example.fourkingmusic.models.Users;
 import com.example.fourkingmusic.repository.PlaylistRepository;
 import com.example.fourkingmusic.service.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;

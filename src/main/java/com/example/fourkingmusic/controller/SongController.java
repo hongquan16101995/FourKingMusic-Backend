@@ -1,7 +1,6 @@
 package com.example.fourkingmusic.controller;
 
 import com.example.fourkingmusic.models.Song;
-import com.example.fourkingmusic.models.Users;
 import com.example.fourkingmusic.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
