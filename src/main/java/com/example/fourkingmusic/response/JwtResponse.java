@@ -7,15 +7,15 @@ import java.util.List;
 public class JwtResponse {
     private String token;
     private String username;
-    private String email;
+    private Long id;
     private List<String> roles;
     private Users user;
 
     public JwtResponse(String token, String username,
-                       String email, List<String> roles, Users user) {
+                       Long id, List<String> roles, Users user) {
         this.token = token;
         this.username = username;
-        this.email = email;
+        this.id = id;
         this.roles = roles;
         this.user = user;
     }
@@ -44,12 +44,12 @@ public class JwtResponse {
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
+    public Long getId() {
+        return id;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public List<String> getRoles() {

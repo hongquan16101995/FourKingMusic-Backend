@@ -3,6 +3,7 @@ package com.example.fourkingmusic.controller;
 import com.example.fourkingmusic.models.Playlist;
 import com.example.fourkingmusic.models.Song;
 import com.example.fourkingmusic.models.Users;
+import com.example.fourkingmusic.response.MessageResponse;
 import com.example.fourkingmusic.service.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -70,10 +71,10 @@ public class PlaylistController {
     }
 
     @PostMapping
-    public ResponseEntity<Playlist> createPlaylist(@RequestBody Playlist playlist) {
+    public ResponseEntity<MessageResponse> createPlaylist(@RequestBody Playlist playlist) {
         playlist.setDateCreated(new Date());
         playlistService.savePlaylist(playlist);
-        return new ResponseEntity<>(playlist, HttpStatus.OK);
+        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
     @DeleteMapping("/{id}")
