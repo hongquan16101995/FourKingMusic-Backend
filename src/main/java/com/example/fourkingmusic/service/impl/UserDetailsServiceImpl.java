@@ -1,5 +1,6 @@
 package com.example.fourkingmusic.service.impl;
 
+import com.example.fourkingmusic.models.Users;
 import com.example.fourkingmusic.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

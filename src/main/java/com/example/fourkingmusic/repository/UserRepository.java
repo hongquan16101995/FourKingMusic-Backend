@@ -1,5 +1,6 @@
 package com.example.fourkingmusic.repository;
 
+import com.example.fourkingmusic.models.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

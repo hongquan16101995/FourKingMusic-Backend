@@ -60,13 +60,8 @@ public class AuthController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getUsername(),
                 userDetails.getId(),
-                roles,
-                userDetails.getAvatarUrl(),
-                userDetails.getGender(),
-                userDetails.getName(),
-                userDetails.getHobbies()
+                userDetails.getUser()
                 ));
     }
 
