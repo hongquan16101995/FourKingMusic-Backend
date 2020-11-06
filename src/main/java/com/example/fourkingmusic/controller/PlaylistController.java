@@ -20,12 +20,6 @@ public class PlaylistController {
     @Autowired
     private PlaylistService playlistService;
 
-    @GetMapping("/user")
-    public ResponseEntity<Iterable<Playlist>> getAllPlaylistOfUser(@RequestBody Users user) {
-        Iterable<Playlist> playlists = playlistService.findByUser(user);
-        return new ResponseEntity<>(playlists, HttpStatus.OK);
-    }
-
     @PostMapping
     public ResponseEntity<Playlist> createPlaylist(@RequestBody Playlist playlist) {
         playlist.setDateCreated(new Date());

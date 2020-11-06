@@ -18,12 +18,6 @@ public class SongController {
     @Autowired
     private SongService songService;
 
-    @GetMapping("/user")
-    public ResponseEntity<Iterable<Song>> getAllSongOfUser(@RequestBody Users user){
-        Iterable<Song> songs = songService.findByUser(user);
-        return new ResponseEntity<>(songs, HttpStatus.OK);
-    }
-
     @PostMapping
     public ResponseEntity<Song> createSong(@RequestBody Song song){
         song.setDateCreated(new Date());
