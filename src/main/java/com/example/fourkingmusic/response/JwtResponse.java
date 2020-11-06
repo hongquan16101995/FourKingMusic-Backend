@@ -1,61 +1,31 @@
 package com.example.fourkingmusic.response;
 
+import com.example.fourkingmusic.models.Users;
+
 import java.util.List;
 
 public class JwtResponse {
     private String token;
-//    private String type = "Bear";
     private String username;
-    private String email;
+    private Long id;
     private List<String> roles;
-    private String avatarUrl;
-    private String gender;
-    private String name;
-    private String hobbies;
+    private Users user;
 
     public JwtResponse(String token, String username,
-                       String email, List<String> roles, String avatarUrl,
-                       String gender, String name, String hobbies) {
+                       Long id, List<String> roles, Users user) {
         this.token = token;
         this.username = username;
-        this.email = email;
+        this.id = id;
         this.roles = roles;
-        this.avatarUrl = avatarUrl;
-        this.gender = gender;
-        this.name = name;
-        this.hobbies = hobbies;
+        this.user = user;
     }
 
-    public String getAvatarUrl() {
-        return avatarUrl;
+    public Users getUser() {
+        return user;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getHobbies() {
-        return hobbies;
-    }
-
-    public void setHobbies(String hobbies) {
-        this.hobbies = hobbies;
+    public void setUser(Users user) {
+        this.user = user;
     }
 
     public String getToken() {
@@ -66,14 +36,6 @@ public class JwtResponse {
         this.token = token;
     }
 
-//    public String getType() {
-//        return type;
-//    }
-//
-//    public void setType(String type) {
-//        this.type = type;
-//    }
-
     public String getUsername() {
         return username;
     }
@@ -82,12 +44,12 @@ public class JwtResponse {
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
+    public Long getId() {
+        return id;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public List<String> getRoles() {

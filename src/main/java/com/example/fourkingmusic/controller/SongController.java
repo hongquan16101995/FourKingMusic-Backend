@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 @Controller
@@ -18,52 +17,10 @@ public class SongController {
     @Autowired
     private SongService songService;
 
-    @GetMapping
-    public ResponseEntity<Iterable<Song>> getAllSong(){
-        ArrayList<Song> songs = songService.findAll();
-        ArrayList<Song> songArrayList = new ArrayList<>();
-        int count = 0;
-        for (Song song : songs) {
-            songArrayList.add(song);
-            count++;
-            if (count == 7) {
-                break;
-            }
-        }
-        return new ResponseEntity<>(songArrayList, HttpStatus.OK);
-    }
-
     @GetMapping("/user")
     public ResponseEntity<Iterable<Song>> getAllSongOfUser(@RequestBody Users user){
         Iterable<Song> songs = songService.findByUser(user);
         return new ResponseEntity<>(songs, HttpStatus.OK);
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<Iterable<Song>> getAllSongByName(@RequestBody String name){
-        Iterable<Song> songs = songService.findByName(name);
-        return new ResponseEntity<>(songs, HttpStatus.OK);
-    }
-
-    @GetMapping("/new")
-    public ResponseEntity<Iterable<Song>> getAllPlaylistNew() {
-        ArrayList<Song> songs = songService.findAll();
-        ArrayList<Song> songArrayList = new ArrayList<>();
-        int count = 0;
-        for (int i = (songs.size()-1); i > 0; i--) {
-            songArrayList.add(songs.get(i));
-            count++;
-            if (count == 10) {
-                break;
-            }
-        }
-        return new ResponseEntity<>(songArrayList, HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Song> getSongById(@PathVariable("id") Long id){
-        Song song = songService.findOne(id);
-        return new ResponseEntity<>(song, HttpStatus.OK);
     }
 
     @PostMapping
