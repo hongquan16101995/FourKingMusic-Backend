@@ -1,6 +1,9 @@
 package com.example.fourkingmusic.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,10 +13,22 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull(message = "Vui lòng nhập tên của bạn!")
+    @Pattern(regexp = "^[a-zA-Z]", message = "Hãy đảm bảo bạn nhập đúng tên!")
     private String name;
+
+    @NotNull(message = "Vui lòng nhập email của bạn!")
+    @Email(message = "Không đúng định dạng email!")
     private String email;
+
+    @NotNull(message = "Vui lòng nhập tên tài khoản của bạn!")
+    @Pattern(regexp = "^[a-z0-9]{4,15}", message = "Nhập chữ cái thường hoặc số từ 4 đến 15 kí tự!")
     private String username;
+
+    @NotNull(message = "Vui lòng nhập mật khẩu của bạn!")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{6,}$", message = "Vui lòng nhập mật khẩu ít nhất 6 kí tự gồm ít nhất 1 chữ hoa, chữ thường và số!")
     private String password;
+
     private String gender;
     private String hobbies;
 
