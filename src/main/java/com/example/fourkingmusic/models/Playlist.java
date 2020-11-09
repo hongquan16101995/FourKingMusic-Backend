@@ -1,6 +1,9 @@
 package com.example.fourkingmusic.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,8 +26,11 @@ public class Playlist {
     private Users user;
 
     @ManyToMany
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JoinTable(name = "playlist_song",
             joinColumns = {@JoinColumn(name = "playlist_id")},
             inverseJoinColumns = {@JoinColumn(name = "song_id")})
+    @JsonIgnoreProperties("playlists")
     private Set<Song> songs;
 }
