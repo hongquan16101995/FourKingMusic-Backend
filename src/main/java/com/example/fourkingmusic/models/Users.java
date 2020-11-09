@@ -14,7 +14,7 @@ public class Users {
     private Long id;
 
     @NotNull(message = "Vui lòng nhập tên của bạn!")
-    @Pattern(regexp = "^[a-zA-Z]", message = "Hãy đảm bảo bạn nhập đúng tên!")
+    @Pattern(regexp = "^[\\D]+", message = "Hãy đảm bảo bạn nhập đúng tên!")
     private String name;
 
     @NotNull(message = "Vui lòng nhập email của bạn!")
@@ -26,7 +26,6 @@ public class Users {
     private String username;
 
     @NotNull(message = "Vui lòng nhập mật khẩu của bạn!")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{6,}$", message = "Vui lòng nhập mật khẩu ít nhất 6 kí tự gồm ít nhất 1 chữ hoa, chữ thường và số!")
     private String password;
 
     private String gender;
