@@ -70,13 +70,13 @@ public class AuthController {
         if (userRepository.existsUsersByUsername(signupRequest.getUsername())){
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
+                    .body(new MessageResponse("Tài khoản đã tồn tại!"));
         }
 
         if(userRepository.existsUsersByEmail(signupRequest.getEmail())){
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Email is already in use!"));
+                    .body(new MessageResponse("Email đã được sử dụng!"));
         }
 
         Users users = new Users(signupRequest.getUsername(),
@@ -102,6 +102,6 @@ public class AuthController {
         users.setRole(roles);
 
         userRepository.save(users);
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return ResponseEntity.ok(new MessageResponse("Đăng ký tài khoản thành công!"));
     }
 }
