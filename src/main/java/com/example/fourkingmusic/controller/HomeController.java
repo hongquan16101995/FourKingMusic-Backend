@@ -35,7 +35,7 @@ public class HomeController {
         for (Singer singer : singers) {
             singerArrayList.add(singer);
             count++;
-            if (count == 7) {
+            if (count == 12) {
                 break;
             }
         }
