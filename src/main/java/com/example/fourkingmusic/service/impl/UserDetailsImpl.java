@@ -14,26 +14,36 @@ import java.util.stream.Collectors;
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private final Long id;
 
-    private String username;
+    private final String username;
 
-    private String email;
+    private final String email;
+
+    private final String avatarUrl;
+    private final String gender;
+    private final String name;
+    private final String hobbies;
 
     @JsonIgnore
-    private String password;
+    private final String password;
 
-    private Collection<? extends GrantedAuthority> authorities;
+    private final Users user;
 
-    private Users user;
+    private final Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(Long id, String username, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities, Users user) {
+                           Collection<? extends GrantedAuthority> authorities, String avatarUrl,
+                           String gender, String name, String hobbies, Users user) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+        this.avatarUrl= avatarUrl;
+        this.gender= gender;
+        this.name = name;
+        this.hobbies= hobbies;
         this.user = user;
     }
 
@@ -48,6 +58,10 @@ public class UserDetailsImpl implements UserDetails {
                 users.getEmail(),
                 users.getPassword(),
                 authorities,
+                users.getAvatarUrl(),
+                users.getGender(),
+                users.getName(),
+                users.getHobbies(),
                 users
                 );
     }
@@ -63,6 +77,22 @@ public class UserDetailsImpl implements UserDetails {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getHobbies() {
+        return hobbies;
     }
 
     public Users getUser() {

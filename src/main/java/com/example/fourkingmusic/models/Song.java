@@ -43,4 +43,13 @@ public class Song {
             inverseJoinColumns = {@JoinColumn(name = "singer_id")})
     @JsonIgnoreProperties("songs")
     private Set<Singer> singers;
+
+    @ManyToMany
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JoinTable(name = "playlist_song",
+            joinColumns = {@JoinColumn(name = "song_id")},
+            inverseJoinColumns = {@JoinColumn(name = "playlist_id")})
+    @JsonIgnoreProperties("songs")
+    private Set<Playlist> playlists;
 }

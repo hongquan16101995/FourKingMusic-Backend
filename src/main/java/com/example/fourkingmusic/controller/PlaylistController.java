@@ -5,13 +5,14 @@ import com.example.fourkingmusic.models.Song;
 import com.example.fourkingmusic.models.Users;
 import com.example.fourkingmusic.response.MessageResponse;
 import com.example.fourkingmusic.service.PlaylistService;
+import com.example.fourkingmusic.service.SongService;
+import com.example.fourkingmusic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Set;
 
@@ -22,94 +23,67 @@ public class PlaylistController {
     @Autowired
     private PlaylistService playlistService;
 
-    @GetMapping
-    public ResponseEntity<Iterable<Playlist>> getAllPlaylist() {
-        ArrayList<Playlist> playlists = playlistService.findAll();
-        ArrayList<Playlist> playlistArrayList = new ArrayList<>();
-        int count = 0;
-        for (Playlist playlist : playlists) {
-            playlistArrayList.add(playlist);
-            count++;
-            if (count == 7) {
-                break;
-            }
-        }
-        return new ResponseEntity<>(playlistArrayList, HttpStatus.OK);
-    }
+    @Autowired
+    private SongService songService;
 
-    @GetMapping("/user")
-    public ResponseEntity<Iterable<Playlist>> getAllPlaylistOfUser(@RequestBody Users user) {
-        Iterable<Playlist> playlists = playlistService.findByUser(user);
-        return new ResponseEntity<>(playlists, HttpStatus.OK);
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<Iterable<Playlist>> getAllPlaylistByName(@RequestBody String name) {
-        Iterable<Playlist> playlists = playlistService.findByName(name);
-        return new ResponseEntity<>(playlists, HttpStatus.OK);
-    }
-
-    @GetMapping("/new")
-    public ResponseEntity<Iterable<Playlist>> getAllPlaylistNew() {
-        ArrayList<Playlist> playlists = playlistService.findAll();
-        ArrayList<Playlist> playlistArrayList = new ArrayList<>();
-        int count = 0;
-        for (int i = (playlists.size()-1); i > 0; i--) {
-            playlistArrayList.add(playlists.get(i));
-            count++;
-            if (count == 10) {
-                break;
-            }
-        }
-        return new ResponseEntity<>(playlistArrayList, HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Playlist> getPlaylistById(@PathVariable("id") Long id) {
-        Playlist playlist = playlistService.findOne(id);
-        return new ResponseEntity<>(playlist, HttpStatus.OK);
-    }
+    @Autowired
+    private UserService userService;
 
     @PostMapping
     public ResponseEntity<MessageResponse> createPlaylist(@RequestBody Playlist playlist) {
         playlist.setDateCreated(new Date());
         playlistService.savePlaylist(playlist);
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        String message = "Tạo playlist mới thành công!";
+        return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Playlist> deletePlaylist(@PathVariable("id") Long id) {
-        playlistService.deletePlaylist(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<MessageResponse> deletePlaylist(@PathVariable("id") Long id, @RequestBody Long userId) {
+        Playlist playlist = playlistService.findOne(id);
+        Users user = userService.findOne(userId);
+        String message;
+        if(playlist.getUser().equals(user)){
+            playlistService.deletePlaylist(id);
+            message = "Xóa playlist thành công!";
+        } else {
+            message = "Bạn không có quyền thực hiện tác vụ này!";
+        }
+        return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
     }
 
     @DeleteMapping("/song/{id}")
-    public ResponseEntity<String> deleteSongOfPlaylist(@PathVariable("id") Long id, @RequestBody Song song) {
+    public ResponseEntity<MessageResponse> deleteSongOfPlaylist(@PathVariable("id") Long id, @RequestBody Long songId) {
         Playlist playlist = playlistService.findOne(id);
+        Song song = songService.findOne(songId);
         Set<Song> songs = playlist.getSongs();
-        String message = "Thành công";
+        String message = "Xóa thành công";
         if (!songs.remove(song)) {
-            message = "Thất bại";
+            message = "Xóa thất bại";
         }
         playlistService.savePlaylist(playlist);
-        return new ResponseEntity<>(message, HttpStatus.OK);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<String> updatePlaylist(@PathVariable("id") Long id, @RequestBody Song song) {
-        Playlist playlist = playlistService.findOne(id);
-        Set<Song> songs = playlist.getSongs();
-        String message = "Thành công";
-        if (!songs.add(song)) {
-            message = "Thất bại";
-        }
-        playlistService.savePlaylist(playlist);
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Playlist> editPlaylist(@RequestBody Playlist playlist) {
+    public ResponseEntity<MessageResponse> editPlaylist(@RequestBody Playlist playlist) {
         playlistService.savePlaylist(playlist);
-        return new ResponseEntity<>(playlist, HttpStatus.OK);
+        String message = "Cập nhật thông playlist thành công!";
+        return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MessageResponse> updatePlaylist(@PathVariable("id") Long id, @RequestBody Long songId) {
+        Playlist playlist = playlistService.findOne(id);
+        Song song = songService.findOne(songId);
+        Set<Song> songs = playlist.getSongs();
+        if(songs.size() == 0){
+            playlist.setAvatarUrl(song.getAvatarUrl());
+        }
+        String message = "Thêm thành công";
+        if (!songs.add(song)) {
+            message = "Thêm thất bại";
+        }
+        playlistService.savePlaylist(playlist);
+        return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
     }
 }
