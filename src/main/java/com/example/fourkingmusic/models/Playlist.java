@@ -19,6 +19,7 @@ public class Playlist {
 
     @NotNull(message = "Vui lòng nhập tên play list của bạn!")
     private String name;
+    private String avatarUrl;
     private Date dateCreated;
 
     @ManyToOne

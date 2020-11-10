@@ -76,6 +76,9 @@ public class PlaylistController {
         Playlist playlist = playlistService.findOne(id);
         Song song = songService.findOne(songId);
         Set<Song> songs = playlist.getSongs();
+        if(songs.size() == 0){
+            playlist.setAvatarUrl(song.getAvatarUrl());
+        }
         String message = "Thêm thành công";
         if (!songs.add(song)) {
             message = "Thêm thất bại";
