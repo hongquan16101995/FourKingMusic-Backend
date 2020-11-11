@@ -60,15 +60,15 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @GetMapping("/song")
-    public ResponseEntity<Iterable<Song>> getAllSongOfUser(@RequestBody Long userId){
+    @GetMapping("/song/{id}")
+    public ResponseEntity<Iterable<Song>> getAllSongOfUser(@PathVariable("id") Long userId){
         Users user = userService.findOne(userId);
         Iterable<Song> songs = songService.findByUser(user);
         return new ResponseEntity<>(songs, HttpStatus.OK);
     }
 
-    @GetMapping("/playlist")
-    public ResponseEntity<Iterable<Playlist>> getAllPlaylistOfUser(@RequestBody Long userId) {
+    @GetMapping("/playlist/{id}")
+    public ResponseEntity<Iterable<Playlist>> getAllPlaylistOfUser(@PathVariable("id") Long userId) {
         Users user = userService.findOne(userId);
         Iterable<Playlist> playlists = playlistService.findByUser(user);
         return new ResponseEntity<>(playlists, HttpStatus.OK);

@@ -21,6 +21,7 @@ public class Playlist {
     private String name;
     private String avatarUrl;
     private Date dateCreated;
+    private Long countLikes;
 
     @ManyToOne
     @JoinColumn(name = "user")
