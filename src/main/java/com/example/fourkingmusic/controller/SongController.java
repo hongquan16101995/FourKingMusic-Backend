@@ -32,17 +32,14 @@ public class SongController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<MessageResponse> deleteSong(@PathVariable("id") Long id, @RequestBody Long userId){
+    public ResponseEntity<MessageResponse> deleteSong(@PathVariable("id") Long id){
         Song song = songService.findOne(id);
-        Users user = userService.findOne(userId);
         String message;
         if(song == null){
             message = "Không có bài hát phù hợp!";
-        } else if(song.getUser().equals(user)){
+        } else {
             songService.deleteSong(id);
             message = "Xóa bài hát thành công!";
-        } else {
-            message = "Bạn không có quyền thực hiện tác vụ này!";
         }
         return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
     }

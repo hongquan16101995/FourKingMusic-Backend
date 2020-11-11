@@ -88,6 +88,8 @@ public class AuthController {
                 signupRequest.getHobbies()
                 );
 
+        users.setAvatarUrl("https://cdn3.vectorstock.com/i/1000x1000/26/62/runner-avatar-figure-with-mp3-player-music-block-vector-32312662.jpg");
+
         Set<String> strRoles = signupRequest.getRoles();
         Set<Role> roles = new HashSet<>();
         if(strRoles == null){
