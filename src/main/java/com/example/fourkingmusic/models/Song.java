@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -30,6 +29,7 @@ public class Song {
     private String avatarUrl;
     private String fileUrl;
     private Date dateCreated;
+    private Long countLike = 0L;
 
     @ManyToOne
     @JoinColumn(name = "users")
