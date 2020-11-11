@@ -32,6 +32,8 @@ public class PlaylistController {
     @PostMapping
     public ResponseEntity<MessageResponse> createPlaylist(@RequestBody Playlist playlist) {
         playlist.setDateCreated(new Date());
+        String AVATAR_URL = "https://photo-zmp3.zadn.vn/album_default.png";
+        playlist.setAvatarUrl(AVATAR_URL);
         playlistService.savePlaylist(playlist);
         String message = "Tạo playlist mới thành công!";
         return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);

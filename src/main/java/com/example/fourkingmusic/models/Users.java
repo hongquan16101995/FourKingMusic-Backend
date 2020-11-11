@@ -1,5 +1,9 @@
 package com.example.fourkingmusic.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -34,10 +38,10 @@ public class Users {
     private String avatarUrl;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles",
+    @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> role = new HashSet<>();
 
     public Users() {
     }
@@ -61,7 +65,7 @@ public class Users {
         this.gender = gender;
         this.hobbies = hobbies;
         this.avatarUrl = avatarUrl;
-        this.roles = roles;
+        this.role = roles;
     }
 
     public Long getId() {
@@ -129,10 +133,10 @@ public class Users {
     }
 
     public Set<Role> getRole() {
-        return roles;
+        return role;
     }
 
     public void setRole(Set<Role> roles) {
-        this.roles = roles;
+        this.role = roles;
     }
 }
