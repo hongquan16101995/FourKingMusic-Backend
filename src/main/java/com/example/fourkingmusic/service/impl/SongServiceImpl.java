@@ -1,5 +1,6 @@
 package com.example.fourkingmusic.service.impl;
 
+import com.example.fourkingmusic.models.Singer;
 import com.example.fourkingmusic.models.Song;
 import com.example.fourkingmusic.models.Users;
 import com.example.fourkingmusic.repository.SongRepository;
@@ -28,6 +29,16 @@ public class SongServiceImpl implements SongService {
     @Override
     public Iterable<Song> findByUser(Users user) {
         return songRepository.findAllByUser(user);
+    }
+
+    @Override
+    public Iterable<Song> findBySinger(Singer singer) {
+        return songRepository.findAllBySingers(singer);
+    }
+
+    @Override
+    public Iterable<Song> findAllByLike() {
+        return songRepository.findAllByOrderByCountLikeDesc();
     }
 
     @Override
