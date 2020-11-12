@@ -40,21 +40,14 @@ public class PlaylistController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<MessageResponse> deletePlaylist(@PathVariable("id") Long id, @RequestBody Long userId) {
-        Playlist playlist = playlistService.findOne(id);
-        Users user = userService.findOne(userId);
-        String message;
-        if(playlist.getUser().equals(user)){
-            playlistService.deletePlaylist(id);
-            message = "Xóa playlist thành công!";
-        } else {
-            message = "Bạn không có quyền thực hiện tác vụ này!";
-        }
+    public ResponseEntity<MessageResponse> deletePlaylist(@PathVariable("id") Long id) {
+        playlistService.deletePlaylist(id);
+        String message = "Xóa playlist thành công!";
         return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
     }
 
-    @DeleteMapping("/song/{id}")
-    public ResponseEntity<MessageResponse> deleteSongOfPlaylist(@PathVariable("id") Long id, @RequestBody Long songId) {
+    @DeleteMapping("/song/{id}/{songid}")
+    public ResponseEntity<MessageResponse> deleteSongOfPlaylist(@PathVariable("id") Long id, @PathVariable("songid") Long songId) {
         Playlist playlist = playlistService.findOne(id);
         Song song = songService.findOne(songId);
         Set<Song> songs = playlist.getSongs();
@@ -78,7 +71,7 @@ public class PlaylistController {
         Playlist playlist = playlistService.findOne(id);
         Song song = songService.findOne(songId);
         Set<Song> songs = playlist.getSongs();
-        if(songs.size() == 0){
+        if (songs.size() == 0) {
             playlist.setAvatarUrl(song.getAvatarUrl());
         }
         String message = "Thêm thành công";
