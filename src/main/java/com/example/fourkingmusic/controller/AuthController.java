@@ -1,15 +1,16 @@
 package com.example.fourkingmusic.controller;
 
 import com.example.fourkingmusic.jwt.JwtUtils;
-import com.example.fourkingmusic.models.ERole;
-import com.example.fourkingmusic.models.Role;
-import com.example.fourkingmusic.models.Users;
+import com.example.fourkingmusic.models.*;
 import com.example.fourkingmusic.repository.RoleRepository;
 import com.example.fourkingmusic.repository.UserRepository;
 import com.example.fourkingmusic.request.LoginRequest;
 import com.example.fourkingmusic.request.SignupRequest;
 import com.example.fourkingmusic.response.JwtResponse;
 import com.example.fourkingmusic.response.MessageResponse;
+import com.example.fourkingmusic.service.LikesongService;
+import com.example.fourkingmusic.service.SongService;
+import com.example.fourkingmusic.service.UserService;
 import com.example.fourkingmusic.service.impl.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -39,6 +41,12 @@ public class AuthController {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    private SongService songService;
+
+    @Autowired
+    private LikesongService likesongService;
 
     @Autowired
     PasswordEncoder encoder;
@@ -102,8 +110,15 @@ public class AuthController {
             roles.add(adminRole);
         }
         users.setRole(roles);
-
         userRepository.save(users);
+        ArrayList<Song> songs = songService.findAll();
+        for (Song song : songs){
+            Likesong likesong = new Likesong();
+            likesong.setUser(users);
+            likesong.setSong(song);
+            likesong.setStatus(false);
+            likesongService.saveLikesong(likesong);
+        }
         return ResponseEntity.ok(new MessageResponse("Đăng ký tài khoản thành công!"));
     }
 }

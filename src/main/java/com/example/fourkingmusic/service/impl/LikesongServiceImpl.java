@@ -1,8 +1,6 @@
 package com.example.fourkingmusic.service.impl;
 
 import com.example.fourkingmusic.models.Likesong;
-import com.example.fourkingmusic.models.Song;
-import com.example.fourkingmusic.models.Users;
 import com.example.fourkingmusic.repository.LikesongRepository;
 import com.example.fourkingmusic.service.LikesongService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +24,5 @@ public class LikesongServiceImpl implements LikesongService {
     @Override
     public void saveLikesong(Likesong likesong) {
         likesongRepository.save(likesong);
-    }
-
-    @Override
-    public Likesong findByUserAndSong(Users user, Song song) {
-        return likesongRepository.findByUserAndSong(user, song);
     }
 }

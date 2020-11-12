@@ -1,12 +1,9 @@
 package com.example.fourkingmusic.controller;
 
+
 import com.example.fourkingmusic.models.Likesong;
-import com.example.fourkingmusic.models.Song;
-import com.example.fourkingmusic.models.Users;
 import com.example.fourkingmusic.response.MessageResponse;
 import com.example.fourkingmusic.service.LikesongService;
-import com.example.fourkingmusic.service.SongService;
-import com.example.fourkingmusic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +16,6 @@ import org.springframework.web.bind.annotation.*;
 public class LikesongController {
     @Autowired
     private LikesongService likesongService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private SongService songService;
 
     @GetMapping
     public ResponseEntity<Iterable<Likesong>> getAllLikesong(){
@@ -43,20 +34,5 @@ public class LikesongController {
         likesongService.saveLikesong(likesong);
         String message = "Success";
         return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
-    }
-
-    @PostMapping("/{id}")
-    public ResponseEntity<Boolean> getLikesongByUserAndSong(@PathVariable("id") Long songId,
-                                                             @RequestBody Long userId){
-        Users user = userService.findOne(userId);
-        Song song = songService.findOne(songId);
-        Likesong likesong = likesongService.findByUserAndSong(user, song);
-        boolean status;
-        if(likesong == null){
-            status = false;
-        } else {
-            status = likesong.isStatus();
-        }
-        return new ResponseEntity<>(status, HttpStatus.OK);
     }
 }

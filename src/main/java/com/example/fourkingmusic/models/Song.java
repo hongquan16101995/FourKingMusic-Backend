@@ -15,11 +15,11 @@ import java.util.Set;
 @Data
 public class Song {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull(message = "Vui lòng nhập tên bài hát!")
-    @Size(max= 100, message = "Vui lòng nhập đúng tên bài hát1")
+    @Size(max= 100, message = "Vui lòng nhập đúng tên bài hát!")
     private String name;
 
     private String description;

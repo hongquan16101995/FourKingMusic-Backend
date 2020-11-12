@@ -2,7 +2,11 @@ package com.example.fourkingmusic.service;
 
 import com.example.fourkingmusic.models.Users;
 
+import java.util.ArrayList;
+
 public interface UserService {
+    ArrayList<Users> findAll();
+
     void updateUser(Users user);
 
     Users findOne(Long id);
