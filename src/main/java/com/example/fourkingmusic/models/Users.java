@@ -14,7 +14,7 @@ import java.util.Set;
 @Entity
 public class Users {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull(message = "Vui lòng nhập tên của bạn!")

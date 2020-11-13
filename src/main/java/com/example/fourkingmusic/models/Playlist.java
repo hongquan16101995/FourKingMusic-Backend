@@ -14,7 +14,7 @@ import java.util.Set;
 @Data
 public class Playlist {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull(message = "Vui lòng nhập tên play list của bạn!")
