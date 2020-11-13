@@ -15,11 +15,11 @@ public class CommentSong {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private Users user;
 
     @ManyToOne
-    @JoinColumn(name = "songId")
+    @JoinColumn(name = "song_id")
     private Song song;
 
 }
