@@ -1,5 +1,6 @@
 package com.example.fourkingmusic.service;
 
+import com.example.fourkingmusic.models.Singer;
 import com.example.fourkingmusic.models.Song;
 import com.example.fourkingmusic.models.Users;
 
@@ -11,6 +12,10 @@ public interface SongService {
     Iterable<Song> findByName(String name);
 
     Iterable<Song> findByUser(Users user);
+
+    Iterable<Song> findBySinger(Singer singer);
+
+    Iterable<Song> findAllByLike();
 
     Song findOne(Long id);
 

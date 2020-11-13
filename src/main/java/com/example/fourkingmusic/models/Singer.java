@@ -12,7 +12,7 @@ import java.util.Set;
 @Data
 public class Singer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;

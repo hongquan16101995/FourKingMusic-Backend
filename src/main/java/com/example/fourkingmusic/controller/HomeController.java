@@ -3,6 +3,7 @@ package com.example.fourkingmusic.controller;
 import com.example.fourkingmusic.models.Playlist;
 import com.example.fourkingmusic.models.Singer;
 import com.example.fourkingmusic.models.Song;
+import com.example.fourkingmusic.response.MessageResponse;
 import com.example.fourkingmusic.service.PlaylistService;
 import com.example.fourkingmusic.service.SingerService;
 import com.example.fourkingmusic.service.SongService;
@@ -30,46 +31,29 @@ public class HomeController {
     @GetMapping("/singer")
     public ResponseEntity<Iterable<Singer>> getAllSinger(){
         ArrayList<Singer> singers = singerService.findAll();
-        ArrayList<Singer> singerArrayList = new ArrayList<>();
-        int count = 0;
-        for (Singer singer : singers) {
-            singerArrayList.add(singer);
-            count++;
-            if (count == 7) {
-                break;
-            }
-        }
-        return new ResponseEntity<>(singerArrayList, HttpStatus.OK);
+        return new ResponseEntity<>(singers, HttpStatus.OK);
     }
 
     @GetMapping("/singer/{id}")
+    public ResponseEntity<Iterable<Song>> getAllSongBySinger(@PathVariable("id") Long id){
+        Singer singer = singerService.findOne(id);
+        Iterable<Song> songs = songService.findBySinger(singer);
+        return new ResponseEntity<>(songs, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
     public ResponseEntity<Singer> getSingerById(@PathVariable("id") Long id){
         Singer singer = singerService.findOne(id);
         return new ResponseEntity<>(singer, HttpStatus.OK);
     }
 
-    @GetMapping("/singer/search")
-    public ResponseEntity<Iterable<Singer>> getAllSingerByName(@RequestBody String name){
-        Iterable<Singer> singers = singerService.findByName(name);
-        return new ResponseEntity<>(singers, HttpStatus.OK);
-    }
-
     @GetMapping("/song")
     public ResponseEntity<Iterable<Song>> getAllSong(){
         ArrayList<Song> songs = songService.findAll();
-        ArrayList<Song> songArrayList = new ArrayList<>();
-        int count = 0;
-        for (Song song : songs) {
-            songArrayList.add(song);
-            count++;
-            if (count == 7) {
-                break;
-            }
-        }
-        return new ResponseEntity<>(songArrayList, HttpStatus.OK);
+        return new ResponseEntity<>(songs, HttpStatus.OK);
     }
 
-    @GetMapping("/song/search")
+    @PostMapping("/song/search")
     public ResponseEntity<Iterable<Song>> getAllSongByName(@RequestBody String name){
         Iterable<Song> songs = songService.findByName(name);
         return new ResponseEntity<>(songs, HttpStatus.OK);
@@ -78,16 +62,13 @@ public class HomeController {
     @GetMapping("/song/new")
     public ResponseEntity<Iterable<Song>> getAllSongNew() {
         ArrayList<Song> songs = songService.findAll();
-        ArrayList<Song> songArrayList = new ArrayList<>();
-        int count = 0;
-        for (int i = (songs.size()-1); i >= 0; i--) {
-            songArrayList.add(songs.get(i));
-            count++;
-            if (count == 7) {
-                break;
-            }
-        }
-        return new ResponseEntity<>(songArrayList, HttpStatus.OK);
+        return new ResponseEntity<>(songs, HttpStatus.OK);
+    }
+
+    @GetMapping("/song/like")
+    public ResponseEntity<Iterable<Song>> getAllSongByLike() {
+        Iterable<Song> songs = songService.findAllByLike();
+        return new ResponseEntity<>(songs, HttpStatus.OK);
     }
 
     @GetMapping("/song/{id}")
@@ -99,19 +80,10 @@ public class HomeController {
     @GetMapping("/playlist")
     public ResponseEntity<Iterable<Playlist>> getAllPlaylist() {
         ArrayList<Playlist> playlists = playlistService.findAll();
-        ArrayList<Playlist> playlistArrayList = new ArrayList<>();
-        int count = 0;
-        for (Playlist playlist : playlists) {
-            playlistArrayList.add(playlist);
-            count++;
-            if (count == 7) {
-                break;
-            }
-        }
-        return new ResponseEntity<>(playlistArrayList, HttpStatus.OK);
+        return new ResponseEntity<>(playlists, HttpStatus.OK);
     }
 
-    @GetMapping("/playlist/search")
+    @PostMapping("/playlist/search")
     public ResponseEntity<Iterable<Playlist>> getAllPlaylistByName(@RequestBody String name) {
         Iterable<Playlist> playlists = playlistService.findByName(name);
         return new ResponseEntity<>(playlists, HttpStatus.OK);
@@ -120,16 +92,7 @@ public class HomeController {
     @GetMapping("/playlist/new")
     public ResponseEntity<Iterable<Playlist>> getAllPlaylistNew() {
         ArrayList<Playlist> playlists = playlistService.findAll();
-        ArrayList<Playlist> playlistArrayList = new ArrayList<>();
-        int count = 0;
-        for (int i = (playlists.size()-1); i >= 0; i--) {
-            playlistArrayList.add(playlists.get(i));
-            count++;
-            if (count == 7) {
-                break;
-            }
-        }
-        return new ResponseEntity<>(playlistArrayList, HttpStatus.OK);
+        return new ResponseEntity<>(playlists, HttpStatus.OK);
     }
 
     @GetMapping("/playlist/{id}")

@@ -5,6 +5,8 @@ import com.example.fourkingmusic.models.Song;
 import com.example.fourkingmusic.models.Users;
 import com.example.fourkingmusic.response.MessageResponse;
 import com.example.fourkingmusic.service.PlaylistService;
+import com.example.fourkingmusic.service.SongService;
+import com.example.fourkingmusic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,53 +23,62 @@ public class PlaylistController {
     @Autowired
     private PlaylistService playlistService;
 
-    @GetMapping("/user")
-    public ResponseEntity<Iterable<Playlist>> getAllPlaylistOfUser(@RequestBody Users user) {
-        Iterable<Playlist> playlists = playlistService.findByUser(user);
-        return new ResponseEntity<>(playlists, HttpStatus.OK);
-    }
+    @Autowired
+    private SongService songService;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping
     public ResponseEntity<MessageResponse> createPlaylist(@RequestBody Playlist playlist) {
         playlist.setDateCreated(new Date());
+        String AVATAR_URL = "https://photo-zmp3.zadn.vn/album_default.png";
+        playlist.setAvatarUrl(AVATAR_URL);
         playlistService.savePlaylist(playlist);
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        String message = "Tạo playlist mới thành công!";
+        return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Playlist> deletePlaylist(@PathVariable("id") Long id) {
+    public ResponseEntity<MessageResponse> deletePlaylist(@PathVariable("id") Long id) {
         playlistService.deletePlaylist(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        String message = "Xóa playlist thành công!";
+        return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
     }
 
-    @DeleteMapping("/song/{id}")
-    public ResponseEntity<String> deleteSongOfPlaylist(@PathVariable("id") Long id, @RequestBody Song song) {
+    @DeleteMapping("/song/{id}/{songid}")
+    public ResponseEntity<MessageResponse> deleteSongOfPlaylist(@PathVariable("id") Long id, @PathVariable("songid") Long songId) {
         Playlist playlist = playlistService.findOne(id);
+        Song song = songService.findOne(songId);
         Set<Song> songs = playlist.getSongs();
-        String message = "Thành công";
+        String message = "Xóa thành công";
         if (!songs.remove(song)) {
-            message = "Thất bại";
+            message = "Xóa thất bại";
         }
         playlistService.savePlaylist(playlist);
-        return new ResponseEntity<>(message, HttpStatus.OK);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<String> updatePlaylist(@PathVariable("id") Long id, @RequestBody Song song) {
-        Playlist playlist = playlistService.findOne(id);
-        Set<Song> songs = playlist.getSongs();
-        String message = "Thành công";
-        if (!songs.add(song)) {
-            message = "Thất bại";
-        }
-        playlistService.savePlaylist(playlist);
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Playlist> editPlaylist(@RequestBody Playlist playlist) {
+    public ResponseEntity<MessageResponse> editPlaylist(@RequestBody Playlist playlist) {
         playlistService.savePlaylist(playlist);
-        return new ResponseEntity<>(playlist, HttpStatus.OK);
+        String message = "Cập nhật thông playlist thành công!";
+        return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<MessageResponse> updatePlaylist(@PathVariable("id") Long id, @RequestBody Long songId) {
+        Playlist playlist = playlistService.findOne(id);
+        Song song = songService.findOne(songId);
+        Set<Song> songs = playlist.getSongs();
+        if (songs.size() == 0) {
+            playlist.setAvatarUrl(song.getAvatarUrl());
+        }
+        String message = "Thêm thành công";
+        if (!songs.add(song)) {
+            message = "Thêm thất bại";
+        }
+        playlistService.savePlaylist(playlist);
+        return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
+    }
 }
