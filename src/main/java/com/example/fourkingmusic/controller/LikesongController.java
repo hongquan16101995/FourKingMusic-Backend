@@ -23,12 +23,6 @@ public class LikesongController {
         return new ResponseEntity<>(likesongs, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Likesong> getLikesong(@PathVariable("id") Long id){
-        Likesong likesong = likesongService.findOne(id);
-        return new ResponseEntity<>(likesong, HttpStatus.OK);
-    }
-
     @PostMapping
     public ResponseEntity<MessageResponse> like(@RequestBody Likesong likesong){
         likesongService.saveLikesong(likesong);
