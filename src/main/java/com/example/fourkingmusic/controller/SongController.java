@@ -48,6 +48,10 @@ public class SongController {
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteSong(@PathVariable("id") Long id){
         Song song = songService.findOne(id);
+        Iterable<Likesong> likesongs = likesongService.findAllBySong(song);
+        for (Likesong likesong : likesongs){
+            likesongService.deleteLikesong(likesong.getId());
+        }
         String message;
         if(song == null){
             message = "Không có bài hát phù hợp!";
