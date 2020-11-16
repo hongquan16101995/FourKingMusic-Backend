@@ -19,6 +19,8 @@ repositories {
 }
 
 dependencies {
+    compile group: 'com.github.messenger4j', name: 'messenger4j', version: '1.0.0'
+
     compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
 
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
