@@ -8,9 +8,7 @@ import com.example.fourkingmusic.request.LoginRequest;
 import com.example.fourkingmusic.request.SignupRequest;
 import com.example.fourkingmusic.response.JwtResponse;
 import com.example.fourkingmusic.response.MessageResponse;
-import com.example.fourkingmusic.service.LikesongService;
-import com.example.fourkingmusic.service.SongService;
-import com.example.fourkingmusic.service.UserService;
+import com.example.fourkingmusic.service.*;
 import com.example.fourkingmusic.service.impl.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +44,13 @@ public class AuthController {
     private SongService songService;
 
     @Autowired
+    private PlaylistService playlistService;
+
+    @Autowired
     private LikesongService likesongService;
+
+    @Autowired
+    private LikeplaylistService likeplaylistService;
 
     @Autowired
     PasswordEncoder encoder;
@@ -112,12 +116,20 @@ public class AuthController {
         users.setRole(roles);
         userRepository.save(users);
         ArrayList<Song> songs = songService.findAll();
+        ArrayList<Playlist> playlists = playlistService.findAll();
         for (Song song : songs){
             Likesong likesong = new Likesong();
             likesong.setUser(users);
             likesong.setSong(song);
             likesong.setStatus(false);
             likesongService.saveLikesong(likesong);
+        }
+        for (Playlist playlist: playlists){
+            Likeplaylist likeplaylist = new Likeplaylist();
+            likeplaylist.setUser(users);
+            likeplaylist.setPlaylist(playlist);
+            likeplaylist.setStatus(false);
+            likeplaylistService.saveLikeplaylist(likeplaylist);
         }
         return ResponseEntity.ok(new MessageResponse("Đăng ký tài khoản thành công!"));
     }

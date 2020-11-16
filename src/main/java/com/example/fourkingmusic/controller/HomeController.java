@@ -1,12 +1,8 @@
 package com.example.fourkingmusic.controller;
 
-import com.example.fourkingmusic.models.Playlist;
-import com.example.fourkingmusic.models.Singer;
-import com.example.fourkingmusic.models.Song;
+import com.example.fourkingmusic.models.*;
 import com.example.fourkingmusic.response.MessageResponse;
-import com.example.fourkingmusic.service.PlaylistService;
-import com.example.fourkingmusic.service.SingerService;
-import com.example.fourkingmusic.service.SongService;
+import com.example.fourkingmusic.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +23,12 @@ public class HomeController {
 
     @Autowired
     private SingerService singerService;
+
+    @Autowired
+    private CommentsongService commentsongService;
+
+    @Autowired
+    private CommentplaylistService commentplaylistService;
 
     @GetMapping("/singer")
     public ResponseEntity<Iterable<Singer>> getAllSinger(){
@@ -99,5 +101,19 @@ public class HomeController {
     public ResponseEntity<Playlist> getPlaylistById(@PathVariable("id") Long id) {
         Playlist playlist = playlistService.findOne(id);
         return new ResponseEntity<>(playlist, HttpStatus.OK);
+    }
+
+    @GetMapping("/commentsong/{id}")
+    public ResponseEntity<Iterable<Commentsong>> getAllCommentBySong(@PathVariable("id") Long id){
+        Song song = songService.findOne(id);
+        Iterable<Commentsong> comments = commentsongService.findAllBySong(song);
+        return new ResponseEntity<>(comments, HttpStatus.OK);
+    }
+
+    @GetMapping("/commentplaylist/{id}")
+    public ResponseEntity<Iterable<Commentplaylist>> getAllCommentByPlaylist(@PathVariable("id") Long id){
+        Playlist playlist = playlistService.findOne(id);
+        Iterable<Commentplaylist> comments = commentplaylistService.findAllByPlaylist(playlist);
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 }
