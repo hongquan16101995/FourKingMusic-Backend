@@ -20,4 +20,5 @@ public class Commentsong {
     @ManyToOne
     @JoinColumn(name = "song")
     private Song song;
+
 }

@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CommentsongRepository extends CrudRepository<Commentsong, Long> {
     Iterable<Commentsong> findAllBySong(Song song);
+
 }
